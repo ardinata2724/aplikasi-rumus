@@ -82,8 +82,6 @@
         }
         .btn-primary { background-color: #007bff; }
         .btn-primary:hover { background-color: #0056b3; }
-        .btn-secondary { background-color: #6c757d; }
-        .btn-secondary:hover { background-color: #5a6268; }
         .btn-warning { background-color: #ffc107; color: #212529; }
         .btn-warning:hover { background-color: #e0a800; }
         .result-container {
@@ -211,11 +209,10 @@
     </div>
 
     <script>
-        function generate() {
-            // Mapping Mistik Baru (MB)
-            const mbMap = { 0: 8, 1: 7, 2: 6, 3: 5, 4: 9, 5: 3, 6: 2, 7: 1, 8: 0, 9: 4 };
+        // Mapping Mistik Baru (MB)
+        const mbMap = { 0: 8, 1: 7, 2: 6, 3: 5, 4: 9, 5: 3, 6: 2, 7: 1, 8: 0, 9: 4 };
 
-            // Ambil nilai dari input
+        function generate() {
             const pos1Select = document.getElementById('pos1');
             const pos2Select = document.getElementById('pos2');
             const op1 = document.getElementById('op1').value;
@@ -226,11 +223,9 @@
             const pos1Index = parseInt(pos1Select.value);
             const pos2Index = parseInt(pos2Select.value);
 
-            // Tampilkan rumus yang digunakan
             const rumusText = `${pos1Select.options[pos1Select.selectedIndex].text}${op1}${pos2Select.options[pos2Select.selectedIndex].text}${op2}${val}.(${useMb ? 'mb' : 'non-mb'})`;
             document.getElementById('rumus-display').textContent = rumusText;
 
-            // Ambil data input dan proses
             const inputData = document.getElementById('inputData').value.trim().split('\n');
             const resultsDiv = document.getElementById('results');
             const finalAiDiv = document.getElementById('final-ai');
@@ -240,33 +235,33 @@
             let lastResult = null;
 
             inputData.forEach(line => {
-                if (line.length === 4 && /^\d+$/.test(line)) {
-                    const digits = line.split('').map(Number);
+                const trimmedLine = line.trim();
+                if (trimmedLine.length === 4 && /^\d+$/.test(trimmedLine)) {
+                    const digits = trimmedLine.split('').map(Number);
                     
                     const num1 = digits[pos1Index];
                     const num2 = digits[pos2Index];
 
-                    // Kalkulasi pertama (misal: A1+C2)
-                    let intermediateResult;
+                    let intermediateResult = 0;
                     if (op1 === '+') {
                         intermediateResult = num1 + num2;
                     } else { // op1 === '-'
                         intermediateResult = num1 - num2;
                     }
 
-                    // Kalkulasi kedua (misal: ...+1)
-                    let finalResult;
+                    let finalResult = 0;
                      if (op2 === '+') {
                         finalResult = intermediateResult + val;
                     } else { // op2 === '-'
                         finalResult = intermediateResult - val;
                     }
                     
-                    // Ambil digit terakhir jika hasil > 9
-                    finalResult = finalResult % 10;
-                    
-                    // Hitung AI 3 digit
-                    let n1 = finalResult;
+                    // --- PERBAIKAN LOGIKA UTAMA ADA DI SINI ---
+                    // Mengambil digit terakhir dari hasil (bukan jumlah digit)
+                    // Contoh: jika hasil 14, maka diambil 4. jika hasil 6, maka diambil 6.
+                    let baseNum = parseInt(String(finalResult).slice(-1));
+
+                    let n1 = baseNum;
                     let n2 = (n1 + 1) % 10;
                     let n3 = (n2 + 1) % 10;
 
@@ -281,12 +276,12 @@
                     
                     const p = document.createElement('p');
                     p.className = 'result-line';
-                    p.innerHTML = `${line} = <span>${ai}</span> ai`;
+                    p.innerHTML = `${trimmedLine} = <span>${ai}</span> ai`;
                     resultsDiv.appendChild(p);
-                } else if (line.length > 0) {
+                } else if (trimmedLine.length > 0) {
                      const p = document.createElement('p');
                      p.className = 'result-line';
-                     p.innerHTML = `${line} ?`;
+                     p.innerHTML = `${trimmedLine} ?`;
                      resultsDiv.appendChild(p);
                 }
             });
@@ -311,7 +306,7 @@
             window.getSelection().removeAllRanges();
         }
         
-        // Panggil fungsi generate saat halaman dimuat untuk menampilkan hasil default
+        // Panggil fungsi generate saat halaman dimuat
         window.onload = generate;
     </script>
 </body>
