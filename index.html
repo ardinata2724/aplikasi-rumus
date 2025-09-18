@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Rumus Togel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        .form-group select, .form-group input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .control-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .control-panel select, .control-panel input {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary { background-color: #007bff; }
+        .btn-primary:hover { background-color: #0056b3; }
+        .btn-secondary { background-color: #6c757d; }
+        .btn-secondary:hover { background-color: #5a6268; }
+        .btn-warning { background-color: #ffc107; color: #212529; }
+        .btn-warning:hover { background-color: #e0a800; }
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fdfdfd;
+        }
+        .result-container h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .result-line {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .result-line span {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .final-ai {
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Generator Rumus AI</h1>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="market">Market</label>
+                <select id="market">
+                    <option>Sydneypools</option>
+                    <option>Singaporepools</option>
+                    <option>Hanoitoto</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hari">Hari</label>
+                <select id="hari">
+                    <option>Harian</option>
+                    <option>Senin</option>
+                    <option>Selasa</option>
+                    <option>Rabu</option>
+                    <option>Kamis</option>
+                    <option>Jumat</option>
+                    <option>Sabtu</option>
+                    <option>Minggu</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="baris">Baris</label>
+                <input type="number" id="baris" value="10">
+            </div>
+            <div class="form-group">
+                <label for="rumus">Rumus</label>
+                <select id="rumus">
+                    <option>AI belakang</option>
+                    <option>AI depan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="patah">Patah</label>
+                <select id="patah">
+                    <option>Patah 0</option>
+                    <option>Patah 1</option>
+                    <option>Patah 2</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="data-rumus">Data Rumus</label>
+                <select id="data-rumus" disabled>
+                    <option>Data Rumus</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <select id="pos1">
+                <option value="0">A1</option>
+                <option value="1">K1</option>
+                <option value="2">C1</option>
+                <option value="3">E1</option>
+            </select>
+            <select id="op1">
+                <option>+</option>
+                <option>-</option>
+            </select>
+            <select id="pos2">
+                <option value="0">A2</option>
+                <option value="1">K2</option>
+                <option value="2" selected>C2</option>
+                <option value="3">E2</option>
+            </select>
+            <select id="op2">
+                <option>+</option>
+                <option>-</option>
+            </select>
+            <input type="number" id="val" value="1" style="width: 50px;">
+            <select id="mb">
+                <option>MB</option>
+                <option>NON-MB</option>
+            </select>
+        </div>
+        
+        <p><strong>Masukkan data angka (4 digit), satu per baris:</strong></p>
+        <textarea id="inputData" rows="11" style="width: 100%; font-family: 'Courier New', Courier, monospace; font-size: 16px; padding: 10px; border-radius: 4px; border: 1px solid #ccc;" placeholder="1885&#10;7461&#10;5903&#10;1749&#10;4006&#10;7698&#10;9710&#10;6905&#10;8064&#10;1601"></textarea>
+
+        <div class="buttons">
+            <button class="btn btn-primary" onclick="generate()">Generate</button>
+            <button class="btn btn-warning" onclick="copyResults()">Copy</button>
+        </div>
+
+        <div class="result-container" id="result-container">
+            <h3>rumus ai 3 digit</h3>
+            <div id="rumus-display">A1+C2+1.(mb)</div>
+            <div id="results"></div>
+            <div id="final-ai" class="final-ai"></div>
+        </div>
+    </div>
+
+    <script>
+        function generate() {
+            // Mapping Mistik Baru (MB)
+            const mbMap = { 0: 8, 1: 7, 2: 6, 3: 5, 4: 9, 5: 3, 6: 2, 7: 1, 8: 0, 9: 4 };
+
+            // Ambil nilai dari input
+            const pos1Select = document.getElementById('pos1');
+            const pos2Select = document.getElementById('pos2');
+            const op1 = document.getElementById('op1').value;
+            const op2 = document.getElementById('op2').value;
+            const val = parseInt(document.getElementById('val').value) || 0;
+            const useMb = document.getElementById('mb').value === 'MB';
+
+            const pos1Index = parseInt(pos1Select.value);
+            const pos2Index = parseInt(pos2Select.value);
+
+            // Tampilkan rumus yang digunakan
+            const rumusText = `${pos1Select.options[pos1Select.selectedIndex].text}${op1}${pos2Select.options[pos2Select.selectedIndex].text}${op2}${val}.(${useMb ? 'mb' : 'non-mb'})`;
+            document.getElementById('rumus-display').textContent = rumusText;
+
+            // Ambil data input dan proses
+            const inputData = document.getElementById('inputData').value.trim().split('\n');
+            const resultsDiv = document.getElementById('results');
+            const finalAiDiv = document.getElementById('final-ai');
+            resultsDiv.innerHTML = '';
+            finalAiDiv.innerHTML = '';
+
+            let lastResult = null;
+
+            inputData.forEach(line => {
+                if (line.length === 4 && /^\d+$/.test(line)) {
+                    const digits = line.split('').map(Number);
+                    
+                    const num1 = digits[pos1Index];
+                    const num2 = digits[pos2Index];
+
+                    // Kalkulasi pertama (misal: A1+C2)
+                    let intermediateResult;
+                    if (op1 === '+') {
+                        intermediateResult = num1 + num2;
+                    } else { // op1 === '-'
+                        intermediateResult = num1 - num2;
+                    }
+
+                    // Kalkulasi kedua (misal: ...+1)
+                    let finalResult;
+                     if (op2 === '+') {
+                        finalResult = intermediateResult + val;
+                    } else { // op2 === '-'
+                        finalResult = intermediateResult - val;
+                    }
+                    
+                    // Ambil digit terakhir jika hasil > 9
+                    finalResult = finalResult % 10;
+                    
+                    // Hitung AI 3 digit
+                    let n1 = finalResult;
+                    let n2 = (n1 + 1) % 10;
+                    let n3 = (n2 + 1) % 10;
+
+                    if (useMb) {
+                        n1 = mbMap[n1];
+                        n2 = mbMap[n2];
+                        n3 = mbMap[n3];
+                    }
+                    
+                    const ai = `${n1}${n2}${n3}`;
+                    lastResult = ai;
+                    
+                    const p = document.createElement('p');
+                    p.className = 'result-line';
+                    p.innerHTML = `${line} = <span>${ai}</span> ai`;
+                    resultsDiv.appendChild(p);
+                } else if (line.length > 0) {
+                     const p = document.createElement('p');
+                     p.className = 'result-line';
+                     p.innerHTML = `${line} ?`;
+                     resultsDiv.appendChild(p);
+                }
+            });
+
+            if (lastResult !== null) {
+                finalAiDiv.textContent = `ai : ${lastResult}`;
+            }
+        }
+
+        function copyResults() {
+            const resultContainer = document.getElementById('result-container');
+            const range = document.createRange();
+            range.selectNode(resultContainer);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                alert('Hasil berhasil disalin!');
+            } catch (err) {
+                alert('Gagal menyalin hasil.');
+            }
+            window.getSelection().removeAllRanges();
+        }
+        
+        // Panggil fungsi generate saat halaman dimuat untuk menampilkan hasil default
+        window.onload = generate;
+    </script>
+</body>
+</html>
